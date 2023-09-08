@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:medicine/color.dart';
@@ -38,38 +37,70 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xff70BAAD),
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        backgroundColor: ColorList.primary,
-        title: const Text('약 검색'),
+        backgroundColor: Color(0xff70BAAD),
+        title: Text(
+          '약 검색',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      labelText: '약품명을 입력하세요',
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.search),
-                        onPressed: () {
-                          setState(() {
-                            futureMedicines =
-                                fetchMedicines(_searchController.text);
-                          });
-                        },
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          hintText: '약품명을 입력하세요',
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
-                  ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          futureMedicines =
+                              fetchMedicines(_searchController.text);
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Color(0xff70BAAD),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
           Expanded(
             child: FutureBuilder<List<dynamic>>(
@@ -78,31 +109,58 @@ class _SearchPageState extends State<SearchPage> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: CircularProgressIndicator(
-                      color: ColorList.primary,
-                    ),
+                      color: Color(0xff70BAAD),
+                    ), // 로딩 인디케이터 스타일 변경
                   );
                 } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
+                  return Text(
+                    'Error: ${snapshot.error}',
+                    style: TextStyle(
+                      color: Colors.white, // 에러 텍스트 색상 변경
+                    ),
+                  );
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(
-                    child: Text('결과가 없습니다.'),
+                  return Center(
+                    child: Text(
+                      '검색 결과가 없습니다.',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white, // 결과 없음 텍스트 색상 변경
+                      ),
+                    ),
                   );
                 } else {
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       var medicine = snapshot.data![index];
-                      return ListTile(
-                        title: Text(medicine['itemName']),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  MedicineDetailPage(medicine: medicine),
+                      return Card(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        elevation: 3,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ListTile(
+                          title: Text(
+                            medicine['itemName'],
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold, // 아이템 텍스트 스타일 변경
                             ),
-                          );
-                        },
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    MedicineDetailPage(medicine: medicine),
+                              ),
+                            );
+                          },
+                        ),
                       );
                     },
                   );

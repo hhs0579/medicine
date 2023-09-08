@@ -31,7 +31,10 @@ class _MapPageState extends State<MapPage> {
           centerTitle: true,
           elevation: 0,
           backgroundColor: ColorList.primary,
-          title: const Text('약국 지도'),
+          title: const Text(
+            '약국 지도',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
         body: SafeArea(
             child: WillPopScope(
