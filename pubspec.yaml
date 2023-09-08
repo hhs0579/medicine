@@ -44,6 +44,7 @@ dependencies:
   flutter_local_notifications:
   google_sign_in:
   flutter_inappwebview:
+  flutter_datetime_picker:
 dev_dependencies:
   flutter_test:
     sdk: flutter
