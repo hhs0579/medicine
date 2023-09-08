@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:medicine/color.dart';
+import 'package:medicine/pages/search/2.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -94,14 +95,12 @@ class _SearchPageState extends State<SearchPage> {
                       return ListTile(
                         title: Text(medicine['itemName']),
                         onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text(medicine['itemName']),
-                                content: const Text('More details here...'),
-                              );
-                            },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  MedicineDetailPage(medicine: medicine),
+                            ),
                           );
                         },
                       );
