@@ -1,32 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-class Map extends StatefulWidget {
-  const Map({super.key});
+import '../../color.dart';
+
+class MapPage extends StatefulWidget {
+  const MapPage({Key? key}) : super(key: key); // 수정됨
 
   @override
-  State<Map> createState() => _MapState();
+  State<MapPage> createState() => _MapPageState();
 }
 
-final GlobalKey webViewKey = GlobalKey();
-Uri myUrl = Uri.parse("https://darkanddarker.wiki.spellsandguns.com/Armors");
-late final InAppWebViewController webViewController;
-double progress = 0;
+class _MapPageState extends State<MapPage> {
+  final GlobalKey webViewKey = GlobalKey();
+  Uri myUrl = Uri.parse(
+      "https://m.map.naver.com/search2/search.naver?query=%EC%95%BD%EA%B5%AD&sm=hty&style=v5");
+  late InAppWebViewController webViewController;
+  double progress = 0;
+  @override
+  void initState() {
+    super.initState();
+  }
 
-class _MapState extends State<Map> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: ColorList.primary,
+          title: const Text('약국 지도'),
+        ),
         body: SafeArea(
             child: WillPopScope(
                 onWillPop: () async {
                   if (await webViewController.canGoBack()) {
                     webViewController.goBack();
-                    return Future.value(false); // 현재 페이지를 유지
+                    return Future.value(false);
                   } else {
-                    return Future.value(true); // 현재 페이지를 종료
+                    return Future.value(true);
                   }
                 },
                 child: Column(children: <Widget>[
