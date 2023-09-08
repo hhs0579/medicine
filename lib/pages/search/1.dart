@@ -75,10 +75,11 @@ class _SearchPageState extends State<SearchPage> {
               future: futureMedicines ?? Future.value([]),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: CircularProgressIndicator());
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: ColorList.primary,
+                    ),
+                  );
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
