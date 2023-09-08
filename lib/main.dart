@@ -8,7 +8,6 @@ import 'auth/login.dart';
 import 'bottom.dart';
 import 'firebase_options.dart';
 
-
 FirebaseAuth auth = FirebaseAuth.instance;
 Future<void> initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
