@@ -23,6 +23,10 @@ class MedicineDetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              medicine['itemImage'] != null
+                  ? Image.network('${medicine['itemImage']}')
+                  : Container(),
+
               Text(
                 '이름: ${medicine['itemName']}',
                 style:
