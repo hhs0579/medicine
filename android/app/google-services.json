@@ -14,7 +14,23 @@
       },
       "oauth_client": [
         {
-          "client_id": "178119636564-1dd6brkittrupithate7of4br50lc0jk.apps.googleusercontent.com",
+          "client_id": "178119636564-4ecji0ut6l09pu8k78au2o6hmu04s1jp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medicine.medicine",
+            "certificate_hash": "a3e5f09508ebeb6f3e2c361e75be7e30ff620511"
+          }
+        },
+        {
+          "client_id": "178119636564-82bvviocs53o9tqdgnn733ovoifg383t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medicine.medicine",
+            "certificate_hash": "2c111ce971e5449cec7a7ad7cb581e25b3d5fd4d"
+          }
+        },
+        {
+          "client_id": "178119636564-1cakmbk7pcd68o9is86o72s9gojurg24.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +43,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "178119636564-1dd6brkittrupithate7of4br50lc0jk.apps.googleusercontent.com",
+              "client_id": "178119636564-1cakmbk7pcd68o9is86o72s9gojurg24.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "178119636564-ucb2dft46rhvtpbi82oo8qkv7vknan9o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.medicine.medicine"
+              }
             }
           ]
         }
