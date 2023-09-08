@@ -43,6 +43,7 @@ dependencies:
   http:
   flutter_local_notifications:
   google_sign_in:
+  flutter_inappwebview:
 dev_dependencies:
   flutter_test:
     sdk: flutter
