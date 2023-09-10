@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:medicine/color.dart';
+import 'package:medicine/pages/alarm/view.dart';
 import 'package:medicine/pages/gpt/question.dart';
 import 'package:medicine/pages/map/view.dart';
 import 'package:medicine/pages/profile/view.dart';
 import 'package:medicine/pages/search/1.dart';
+import 'package:medicine/pages/alarm/view.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
   final int initialIndex;
@@ -38,7 +40,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         index: _selectedIndex,
         children: [
           const SearchPage(),
-          Container(),
+          const MyAlarm(),
           const Question(),
           const MapPage(),
           const MyPage()
