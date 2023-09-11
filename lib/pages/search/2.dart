@@ -9,12 +9,12 @@ class MedicineDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff70BAAD), // 전체 배경 색상 설정
+      backgroundColor: const Color(0xff70BAAD), // 전체 배경 색상 설정
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Color(0xff70BAAD), // 앱바 색상 설정
-        title: Text(
+        backgroundColor: const Color(0xff70BAAD), // 앱바 색상 설정
+        title: const Text(
           '약품 상세',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -29,31 +29,32 @@ class MedicineDetailPage extends StatelessWidget {
             medicine['itemImage'] != null
                 ? Image.network('${medicine['itemImage']}')
                 : Container(),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // 약품 이름
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
+              margin: const EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
 
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
-                    color: Color.fromARGB(255, 70, 68, 68).withOpacity(0.5),
+                    color:
+                        const Color.fromARGB(255, 70, 68, 68).withOpacity(0.5),
                     spreadRadius: 2,
                     blurRadius: 5,
                   ),
                 ],
               ),
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       '약품명: ${medicine['itemName']}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: Colors.black, // 텍스트 컬러 변경
@@ -63,11 +64,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // 효능
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
+              margin: const EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -80,11 +81,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       '효능',
                       style: TextStyle(
                         fontSize: 20,
@@ -94,7 +95,7 @@ class MedicineDetailPage extends StatelessWidget {
                     ),
                     Text(
                       '${medicine['efcyQesitm']}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black, // 텍스트 컬러 변경
                       ),
@@ -103,11 +104,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // 사용법
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
+              margin: const EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -120,11 +121,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       '사용법',
                       style: TextStyle(
                         fontSize: 20,
@@ -134,7 +135,7 @@ class MedicineDetailPage extends StatelessWidget {
                     ),
                     Text(
                       '${medicine['useMethodQesitm']}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black, // 텍스트 컬러 변경
                       ),
@@ -143,11 +144,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // 숙지사항
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
+              margin: const EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -160,11 +161,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       '숙지사항',
                       style: TextStyle(
                         fontSize: 20,
@@ -174,7 +175,7 @@ class MedicineDetailPage extends StatelessWidget {
                     ),
                     Text(
                       '${medicine['atpnWarnQesitm']}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black, // 텍스트 컬러 변경
                       ),
@@ -183,11 +184,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // 주의사항
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
+              margin: const EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -200,11 +201,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       '주의사항',
                       style: TextStyle(
                         fontSize: 20,
@@ -214,7 +215,7 @@ class MedicineDetailPage extends StatelessWidget {
                     ),
                     Text(
                       '${medicine['atpnQesitm']}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black, // 텍스트 컬러 변경
                       ),
@@ -223,11 +224,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // 주의할 음식 및 약품
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
+              margin: const EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -240,11 +241,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       '주의할 음식 및 약품',
                       style: TextStyle(
                         fontSize: 20,
@@ -254,7 +255,7 @@ class MedicineDetailPage extends StatelessWidget {
                     ),
                     Text(
                       '${medicine['intrcQesitm']}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black, // 텍스트 컬러 변경
                       ),
@@ -263,11 +264,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // 이상반응
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
+              margin: const EdgeInsets.symmetric(horizontal: 18), // 좌우 여백 추가
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -280,11 +281,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       '이상반응',
                       style: TextStyle(
                         fontSize: 20,
@@ -294,7 +295,7 @@ class MedicineDetailPage extends StatelessWidget {
                     ),
                     Text(
                       '${medicine['seQesitm']}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black, // 텍스트 컬러 변경
                       ),
@@ -303,11 +304,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // 보관법
             Container(
-              margin: EdgeInsets.fromLTRB(18, 0, 18, 18), // 좌우 여백 추가
+              margin: const EdgeInsets.fromLTRB(18, 0, 18, 18), // 좌우 여백 추가
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -320,11 +321,11 @@ class MedicineDetailPage extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       '보관법',
                       style: TextStyle(
                         fontSize: 20,
@@ -334,7 +335,7 @@ class MedicineDetailPage extends StatelessWidget {
                     ),
                     Text(
                       '${medicine['depositMethodQesitm']}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black, // 텍스트 컬러 변경
                       ),

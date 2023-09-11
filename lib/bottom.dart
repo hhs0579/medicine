@@ -38,12 +38,12 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
       resizeToAvoidBottomInset: false,
       body: IndexedStack(
         index: _selectedIndex,
-        children: [
-          const SearchPage(),
-          const MyAlarm(),
-          const Question(),
-          const MapPage(),
-          const MyPage()
+        children: const [
+          SearchPage(),
+          MyAlarm(),
+          Question(),
+          MapPage(),
+          MyPage()
         ],
       ),
       bottomNavigationBar: BottomAppBar(
