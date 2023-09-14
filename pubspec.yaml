@@ -45,6 +45,7 @@ dependencies:
   google_sign_in:
   flutter_inappwebview:
   flutter_datetime_picker:
+shared_preferences: ^2.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
