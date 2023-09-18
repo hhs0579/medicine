@@ -143,9 +143,9 @@ class _MyAlarmState extends State<MyAlarm> {
           title: const Text(
             '일정 설정',
             style: TextStyle(
-              fontSize: 20, // 제목 텍스트 크기 변경
-              fontWeight: FontWeight.bold, // 제목 텍스트 굵기 변경
-              color: Color(0xff70BAAD), // 제목 텍스트 색상 변경
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff70BAAD),
             ),
           ),
           content: Column(
@@ -155,7 +155,7 @@ class _MyAlarmState extends State<MyAlarm> {
                 decoration: const InputDecoration(
                   labelText: '약 이름',
                   labelStyle: TextStyle(
-                    color: Color(0xff70BAAD), // 라벨 텍스트 색상 변경
+                    color: Color(0xff70BAAD),
                   ),
                 ),
                 onChanged: (value) {
@@ -163,6 +163,22 @@ class _MyAlarmState extends State<MyAlarm> {
                     alarmName = value;
                   });
                 },
+                controller: TextEditingController(text: alarmName),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final TimeOfDay? pickedTimeNew = await showTimePicker(
+                    context: context,
+                    initialTime: pickedTime,
+                  );
+
+                  if (pickedTimeNew != null) {
+                    setState(() {
+                      pickedTime = pickedTimeNew;
+                    });
+                  }
+                },
+                child: const Text('알림 시간 변경'),
               ),
             ],
           ),
@@ -174,7 +190,7 @@ class _MyAlarmState extends State<MyAlarm> {
               child: const Text(
                 '취소',
                 style: TextStyle(
-                  color: Color(0xff70BAAD), // 취소 버튼 텍스트 색상 변경
+                  color: Color(0xff70BAAD),
                 ),
               ),
             ),
@@ -184,20 +200,21 @@ class _MyAlarmState extends State<MyAlarm> {
                   time: pickedTime,
                   name: alarmName,
                 );
+                _cancelNotification(alarm.hashCode);
                 _scheduleNotification(updatedAlarm);
                 Navigator.of(context).pop();
               },
               child: const Text(
                 '저장',
                 style: TextStyle(
-                  color: Color(0xff70BAAD), // 저장 버튼 텍스트 색상 변경
+                  color: Color(0xff70BAAD),
                 ),
               ),
             ),
           ],
-          backgroundColor: Colors.white, // 배경색 변경
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10), // 모서리 둥글게 만들기
+            borderRadius: BorderRadius.circular(10),
           ),
         );
       },
@@ -215,7 +232,7 @@ class _MyAlarmState extends State<MyAlarm> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.white, // 텍스트 색상 변경
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 8),
@@ -223,47 +240,145 @@ class _MyAlarmState extends State<MyAlarm> {
             const Text(
               '등록된 알림이 없습니다.',
               style: TextStyle(
-                color: Colors.white, // 텍스트 색상 변경
+                color: Colors.white,
               ),
             )
           else
             ...alarms.map(
-              (alarm) => Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ), // ListTile 대신 Card 위젯 사용
-                color: Colors.white, // 카드 배경색 변경
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                elevation: 2, // 그림자 추가
-                child: ListTile(
-                  title: Text(
-                    '복용 시간: ${alarm.time.format(context)}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff70BAAD), // 텍스트 색상 변경
+              (alarm) => GestureDetector(
+                onTap: () {
+                  _editAlarm(context, alarm); // 알림을 탭하면 수정 화면을 표시
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  color: Colors.white,
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  elevation: 2,
+                  child: ListTile(
+                    title: Text(
+                      '복용 시간: ${alarm.time.format(context)}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff70BAAD),
+                      ),
                     ),
-                  ), // 알림 시간 표시
-                  subtitle: Text(
-                    '약 이름: ${alarm.name}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff70BAAD), // 텍스트 색상 변경
+                    subtitle: Text(
+                      '약 이름: ${alarm.name}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff70BAAD),
+                      ),
                     ),
-                  ), // 알림 이름 표시
-                  trailing: IconButton(
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Color(0xff70BAAD), // 삭제 아이콘 색상 변경
+                    trailing: IconButton(
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Color(0xff70BAAD),
+                      ),
+                      onPressed: () {
+                        _cancelNotification(alarm.hashCode);
+                      },
                     ),
-                    onPressed: () {
-                      _cancelNotification(alarm.hashCode);
-                    },
                   ),
                 ),
               ),
             ),
         ],
       ),
+    );
+  }
+
+  Future<void> _editAlarm(BuildContext context, Alarm alarm) async {
+    TimeOfDay pickedTime = alarm.time;
+    String alarmName = alarm.name;
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            '일정 수정',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff70BAAD),
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: '약 이름',
+                  labelStyle: TextStyle(
+                    color: Color(0xff70BAAD),
+                  ),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    alarmName = value;
+                  });
+                },
+                controller: TextEditingController(text: alarmName),
+              ),
+              SizedBox(height: 10,),
+              ElevatedButton(
+                onPressed: () async {
+                  final TimeOfDay? pickedTimeNew = await showTimePicker(
+                    context: context,
+                    initialTime: pickedTime,
+                  );
+
+                  if (pickedTimeNew != null) {
+                    setState(() {
+                      pickedTime = pickedTimeNew;
+                    });
+                  }
+                },
+                child: const Text('알림 시간 변경'),
+                 style: ElevatedButton.styleFrom(
+    primary: Color(0xff70BAAD), // Set the button background color
+  ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                '취소',
+                style: TextStyle(
+                  color: Color(0xff70BAAD),
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                final updatedAlarm = Alarm(
+                  time: pickedTime,
+                  name: alarmName,
+                );
+                _cancelNotification(alarm.hashCode);
+                _scheduleNotification(updatedAlarm);
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                '저장',
+                style: TextStyle(
+                  color: Color(0xff70BAAD),
+                ),
+              ),
+            ),
+          ],
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        );
+      },
     );
   }
 
@@ -307,7 +422,7 @@ class _MyAlarmState extends State<MyAlarm> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xff70BAAD), // 앱바 배경색 변경
+        backgroundColor: const Color(0xff70BAAD),
         elevation: 0,
       ),
       body: Container(
@@ -324,7 +439,7 @@ class _MyAlarmState extends State<MyAlarm> {
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: const Color(0xff70BAAD),
-                  backgroundColor: Colors.white, // 버튼 배경색 변경
+                  backgroundColor: Colors.white,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                   shape: RoundedRectangleBorder(
@@ -334,7 +449,7 @@ class _MyAlarmState extends State<MyAlarm> {
                 child: Text(
                   '복용 일정 목록 ${showAlarmList ? '접기' : '보기'}',
                   style: const TextStyle(
-                    color: Color(0xff70BAAD), // 버튼 텍스트 색상
+                    color: Color(0xff70BAAD),
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -350,10 +465,8 @@ class _MyAlarmState extends State<MyAlarm> {
         foregroundColor: const Color(0xff70BAAD),
         backgroundColor: Colors.white,
         child: const Icon(Icons.add),
-        // 플로팅 액션 버튼 배경색 변경
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.endFloat, // 우측 하단에 배치
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
@@ -364,7 +477,6 @@ class Alarm {
 
   Alarm({required this.time, required this.name});
 
-  // Convert an Alarm object to JSON string
   String toJsonString() {
     final Map<String, dynamic> json = {
       'time': {
@@ -373,12 +485,11 @@ class Alarm {
       },
       'name': name,
     };
-    return jsonEncode(json); // JSON을 문자열로 인코딩
+    return jsonEncode(json);
   }
 
-  // Create an Alarm object from JSON string
   factory Alarm.fromJson(String jsonString) {
-    final Map<String, dynamic> json = jsonDecode(jsonString); // 문자열을 JSON으로 디코딩
+    final Map<String, dynamic> json = jsonDecode(jsonString);
     final timeJson = json['time'] as Map<String, dynamic>;
     final hour = timeJson['hour'] as int;
     final minute = timeJson['minute'] as int;
