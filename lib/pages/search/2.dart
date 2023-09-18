@@ -297,7 +297,7 @@ class MedicineDetailPage extends StatelessWidget {
               ),
             ),
 
-// 보관법
+
             Visibility(
               visible: medicine['depositMethodQesitm'] != null &&
                   medicine['depositMethodQesitm'].isNotEmpty,
