@@ -15,14 +15,14 @@ class MyApp extends StatelessWidget {
       FlutterLocalNotificationsPlugin();
   late AndroidNotificationChannel channel;
 
-  MyApp() {
-    final settingsAndroid = AndroidInitializationSettings('app_icon');
-    final initializationSettings =
+  MyApp({super.key}) {
+    const settingsAndroid = AndroidInitializationSettings('app_icon');
+    const initializationSettings =
         InitializationSettings(android: settingsAndroid);
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
-    channel = AndroidNotificationChannel(
+    channel = const AndroidNotificationChannel(
       'channel_id',
       'Channel Name',
       importance: Importance.high,
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyAlarm(),
     );
@@ -62,7 +62,7 @@ class _MyAlarmState extends State<MyAlarm> {
     super.initState();
     tz.initializeTimeZones();
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
@@ -82,15 +82,16 @@ class _MyAlarmState extends State<MyAlarm> {
     );
 
     while (scheduledTime.isBefore(now)) {
-      scheduledTime = scheduledTime.add(Duration(days: 1));
+      scheduledTime = scheduledTime.add(const Duration(days: 1));
     }
 
     try {
-      var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
         'channel_id',
         'Channel Name',
         importance: Importance.max,
         priority: Priority.high,
+        icon: 'app_icon',
       );
 
       var platformChannelSpecifics = NotificationDetails(
@@ -135,134 +136,136 @@ class _MyAlarmState extends State<MyAlarm> {
     TimeOfDay pickedTime = alarm.time;
     String alarmName = alarm.name;
 
-await showDialog(
-  context: context,
-  builder: (BuildContext context) {
-    return AlertDialog(
-      title: Text(
-        '일정 설정',
-        style: TextStyle(
-          fontSize: 20, // 제목 텍스트 크기 변경
-          fontWeight: FontWeight.bold, // 제목 텍스트 굵기 변경
-          color: const Color(0xff70BAAD), // 제목 텍스트 색상 변경
-        ),
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          TextField(
-            decoration: InputDecoration(
-              labelText: '약 이름',
-              labelStyle: TextStyle(
-                color: const Color(0xff70BAAD), // 라벨 텍스트 색상 변경
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            '일정 설정',
+            style: TextStyle(
+              fontSize: 20, // 제목 텍스트 크기 변경
+              fontWeight: FontWeight.bold, // 제목 텍스트 굵기 변경
+              color: Color(0xff70BAAD), // 제목 텍스트 색상 변경
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: '약 이름',
+                  labelStyle: TextStyle(
+                    color: Color(0xff70BAAD), // 라벨 텍스트 색상 변경
+                  ),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    alarmName = value;
+                  });
+                },
               ),
-            ),
-            onChanged: (value) {
-              setState(() {
-                alarmName = value;
-              });
-            },
+            ],
           ),
-        ],
-      ),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            '취소',
-            style: TextStyle(
-              color: const Color(0xff70BAAD), // 취소 버튼 텍스트 색상 변경
-            ),
-          ),
-        ),
-        TextButton(
-          onPressed: () {
-            final updatedAlarm = Alarm(
-              time: pickedTime,
-              name: alarmName,
-            );
-            _scheduleNotification(updatedAlarm);
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            '저장',
-            style: TextStyle(
-              color: const Color(0xff70BAAD), // 저장 버튼 텍스트 색상 변경
-            ),
-          ),
-        ),
-      ],
-      backgroundColor: Colors.white, // 배경색 변경
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10), // 모서리 둥글게 만들기
-      ),
-    );
-  },
-);
-
-  }
-
-Widget _buildAlarmList() {
-  return Padding(padding: const EdgeInsets.all(16.0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '알림 목록',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white, // 텍스트 색상 변경
-          ),
-        ),
-        SizedBox(height: 8),
-        if (alarms.isEmpty)
-          Text(
-            '등록된 알림이 없습니다.',
-            style: TextStyle(
-              color: Colors.white, // 텍스트 색상 변경
-            ),
-          )
-        else
-          ...alarms.map(
-            (alarm) => Card(                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ), // ListTile 대신 Card 위젯 사용
-              color: Colors.white, // 카드 배경색 변경
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              elevation: 2, // 그림자 추가
-              child: ListTile(
-                title: Text(
-                  '복용 시간: ${alarm.time.format(context)}',
-                  style: TextStyle(fontWeight: FontWeight.bold,
-                     color: const Color(0xff70BAAD), // 텍스트 색상 변경
-                  ),
-                ), // 알림 시간 표시
-                subtitle: Text(
-                  '약 이름: ${alarm.name}',
-                  style: TextStyle(fontWeight: FontWeight.bold,
-                    color: const Color(0xff70BAAD), // 텍스트 색상 변경
-                  ),
-                ), // 알림 이름 표시
-                trailing: IconButton(
-                  icon: Icon(
-                    Icons.delete,
-                     color: const Color(0xff70BAAD), // 삭제 아이콘 색상 변경
-                  ),
-                  onPressed: () {
-                    _cancelNotification(alarm.hashCode);
-                  },
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                '취소',
+                style: TextStyle(
+                  color: Color(0xff70BAAD), // 취소 버튼 텍스트 색상 변경
                 ),
               ),
             ),
+            TextButton(
+              onPressed: () {
+                final updatedAlarm = Alarm(
+                  time: pickedTime,
+                  name: alarmName,
+                );
+                _scheduleNotification(updatedAlarm);
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                '저장',
+                style: TextStyle(
+                  color: Color(0xff70BAAD), // 저장 버튼 텍스트 색상 변경
+                ),
+              ),
+            ),
+          ],
+          backgroundColor: Colors.white, // 배경색 변경
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10), // 모서리 둥글게 만들기
           ),
-      ],
-    ),
-  );
-}
+        );
+      },
+    );
+  }
 
+  Widget _buildAlarmList() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            '알림 목록',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white, // 텍스트 색상 변경
+            ),
+          ),
+          const SizedBox(height: 8),
+          if (alarms.isEmpty)
+            const Text(
+              '등록된 알림이 없습니다.',
+              style: TextStyle(
+                color: Colors.white, // 텍스트 색상 변경
+              ),
+            )
+          else
+            ...alarms.map(
+              (alarm) => Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ), // ListTile 대신 Card 위젯 사용
+                color: Colors.white, // 카드 배경색 변경
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                elevation: 2, // 그림자 추가
+                child: ListTile(
+                  title: Text(
+                    '복용 시간: ${alarm.time.format(context)}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff70BAAD), // 텍스트 색상 변경
+                    ),
+                  ), // 알림 시간 표시
+                  subtitle: Text(
+                    '약 이름: ${alarm.name}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff70BAAD), // 텍스트 색상 변경
+                    ),
+                  ), // 알림 이름 표시
+                  trailing: IconButton(
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Color(0xff70BAAD), // 삭제 아이콘 색상 변경
+                    ),
+                    onPressed: () {
+                      _cancelNotification(alarm.hashCode);
+                    },
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
 
   Future<void> _cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);
@@ -299,7 +302,10 @@ Widget _buildAlarmList() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('복용 일정 관리',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text(
+          '복용 일정 관리',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: const Color(0xff70BAAD), // 앱바 배경색 변경
         elevation: 0,
@@ -309,21 +315,13 @@ Widget _buildAlarmList() {
         child: Center(
           child: Column(
             children: <Widget>[
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   setState(() {
                     showAlarmList = !showAlarmList;
                   });
                 },
-                child: Text(
-                  '복용 일정 목록 ${showAlarmList ? '접기' : '보기'}',
-                  style: TextStyle(
-                    color: const Color(0xff70BAAD), // 버튼 텍스트 색상
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: const Color(0xff70BAAD),
                   backgroundColor: Colors.white, // 버튼 배경색 변경
@@ -331,6 +329,14 @@ Widget _buildAlarmList() {
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  '복용 일정 목록 ${showAlarmList ? '접기' : '보기'}',
+                  style: const TextStyle(
+                    color: Color(0xff70BAAD), // 버튼 텍스트 색상
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -341,9 +347,9 @@ Widget _buildAlarmList() {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showTimePicker(context),
-        child: Icon(Icons.add),
         foregroundColor: const Color(0xff70BAAD),
         backgroundColor: Colors.white,
+        child: const Icon(Icons.add),
         // 플로팅 액션 버튼 배경색 변경
       ),
       floatingActionButtonLocation:

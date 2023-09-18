@@ -38,14 +38,14 @@ dependencies:
   cloud_firestore:
   firebase_core:
   flutter_localization:
-  shared_preferences:
+
   intl:
   http:
   flutter_local_notifications:
   google_sign_in:
   flutter_inappwebview:
   flutter_datetime_picker:
-shared_preferences: ^2.2.1
+  shared_preferences:
 dev_dependencies:
   flutter_test:
     sdk: flutter

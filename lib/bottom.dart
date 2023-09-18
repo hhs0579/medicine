@@ -5,7 +5,6 @@ import 'package:medicine/pages/gpt/question.dart';
 import 'package:medicine/pages/map/view.dart';
 import 'package:medicine/pages/profile/view.dart';
 import 'package:medicine/pages/search/1.dart';
-import 'package:medicine/pages/alarm/view.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
   final int initialIndex;
@@ -61,6 +60,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "button1",
         backgroundColor: ColorList.primary,
         child: const Icon(Icons.smart_toy_outlined),
         onPressed: () {
