@@ -5,44 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-void main() async {
-  tz.initializeTimeZones();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-  late AndroidNotificationChannel channel;
-
-  MyApp({super.key}) {
-    const settingsAndroid = AndroidInitializationSettings('app_icon');
-    const initializationSettings =
-        InitializationSettings(android: settingsAndroid);
-
-    flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
-    channel = const AndroidNotificationChannel(
-      'channel_id',
-      'Channel Name',
-      importance: Importance.high,
-      playSound: true,
-    );
-
-    flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyAlarm(),
-    );
-  }
-}
 
 class MyAlarm extends StatefulWidget {
   const MyAlarm({Key? key}) : super(key: key);
@@ -322,7 +284,9 @@ class _MyAlarmState extends State<MyAlarm> {
                 },
                 controller: TextEditingController(text: alarmName),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               ElevatedButton(
                 onPressed: () async {
                   final TimeOfDay? pickedTimeNew = await showTimePicker(
@@ -336,10 +300,11 @@ class _MyAlarmState extends State<MyAlarm> {
                     });
                   }
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Color(0xff70BAAD), // Set the button background color
+                ),
                 child: const Text('알림 시간 변경'),
-                 style: ElevatedButton.styleFrom(
-    primary: Color(0xff70BAAD), // Set the button background color
-  ),
               ),
             ],
           ),

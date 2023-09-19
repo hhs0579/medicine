@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:medicine/auth/ok.dart';
 
 import '../bottom.dart';
 import '../main.dart';
@@ -63,21 +64,39 @@ class _LoginState extends State<Login> {
               width: MediaQuery.of(context).size.width * 0.4,
               child: Image.asset('assets/images/main.png'),
             ),
-            InkWell(
-              onTap: () {
-                signInWithGoogle(context);
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Image.asset(
-                      'assets/images/google.png',
-                    ),
+            Column(
+              children: [
+                InkWell(
+                  onTap: () {
+                    signInWithGoogle(context);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: Image.asset(
+                          'assets/images/google.png',
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Ok()),
+                    );
+                  },
+                  child: const Text(
+                    '개인정보처리방침',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
             )
           ],
         ),
