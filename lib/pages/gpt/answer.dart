@@ -11,7 +11,7 @@ class Answer extends StatefulWidget {
 }
 
 class _AnswerState extends State<Answer> {
-  final apiKey = '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';
+  final apiKey = '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';
   final apiUrl = "https://api.openai.com/v1/chat/completions";
 
   @override
